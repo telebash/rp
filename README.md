@@ -3,4 +3,4 @@ Restaurant and Pizza
 
 Stack: FastAPI, SQLAlchemy, Postgresql
 
-Coverage: 78%
+Coverage: 80%
