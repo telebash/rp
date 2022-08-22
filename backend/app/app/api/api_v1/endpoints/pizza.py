@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/")
-def read_pizzas(
+def read_pizza_multi(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
@@ -68,6 +68,22 @@ def read_pizza(
     """
     pizza = crud.pizza.get(db=db, id=id)
     return pizza
+
+
+@router.get("/restaurant/{restaurant_id}")
+def read_pizza_by_restaurant(
+    *,
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+    restaurant_id: int
+) -> Any:
+    return crud.pizza.get_multi_by_restaurant(
+        db,
+        skip=skip,
+        limit=limit,
+        restaurant_id=restaurant_id
+    )
 
 
 @router.delete("/{id}")
