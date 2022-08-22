@@ -10,3 +10,11 @@ def create_random_restaurant(db: Session) -> models.Restaurant:
     address = random_lower_string()
     restaurant_in = RestaurantCreate(name=name, address=address)
     return crud.restaurant.create(db=db, obj_in=restaurant_in)
+
+
+def delete_restaurant(
+    db: Session,
+    *,
+    id: int
+) -> models.Pizza:
+    return crud.restaurant.remove(db=db, id=id)

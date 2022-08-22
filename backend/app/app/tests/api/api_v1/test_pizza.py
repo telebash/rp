@@ -17,7 +17,8 @@ def test_create_pizza(
         "description": random_lower_string()
     }
     response = client.post(
-        f"{settings.API_V1_STR}/pizza/?restarant_id={restaurant.id}", json=data,
+        f"{settings.API_V1_STR}/pizza/?restarant_id={restaurant.id}",
+        json=data,
     )
     assert response.status_code == 200
     content = response.json()
