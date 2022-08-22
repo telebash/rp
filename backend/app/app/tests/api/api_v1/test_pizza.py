@@ -28,7 +28,7 @@ def test_create_pizza(
     assert content["restaurant_id"] == restaurant.id
 
 
-def test_read_pizzas(
+def test_read_pizza_multi(
     client: TestClient,
     db: Session
 ) -> None:
@@ -58,6 +58,23 @@ def test_read_pizza(
     assert content["description"] == pizza.description
     assert content["id"] == pizza.id
     assert content["restaurant_id"] == pizza.restaurant_id
+
+
+def test_read_pizza_by_restaurant(
+    client: TestClient,
+    db: Session
+) -> None:
+    pizza = create_random_pizza(db)
+    response = client.get(
+        f"{settings.API_V1_STR}/pizza/restaurant/{pizza.restaurant_id}"
+    )
+    assert response.status_code == 200
+    content = response.json()
+    for pizza in content:
+        assert "id" in pizza
+        assert "name" in pizza
+        assert "description" in pizza
+        assert "restaurant_id" in pizza
 
 
 def test_update_pizza(
