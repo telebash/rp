@@ -24,3 +24,11 @@ def create_random_pizza(
         obj_in=pizza_in,
         restaurant_id=restaurant_id
     )
+
+
+def delete_pizza(
+    db: Session,
+    *,
+    id: int
+) -> models.Pizza:
+    return crud.pizza.remove(db=db, id=id)

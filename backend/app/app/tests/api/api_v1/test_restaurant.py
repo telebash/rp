@@ -3,23 +3,24 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.tests.utils.restaurant import create_random_restaurant
+from app.tests.utils.utils import random_lower_string
 
 
 def test_create_restaurant(
     client: TestClient, db: Session
 ) -> None:
-    data = {"name": "Foo", "address": "Fighters"}
+    data = {
+        "name": random_lower_string(),
+        "address": random_lower_string()
+    }
     response = client.post(
         f"{settings.API_V1_STR}/restaurant/", json=data,
     )
-    if response.status_code == 200:
-        assert response.status_code == 200
-        content = response.json()
-        assert content["name"] == data["name"]
-        assert content["address"] == data["address"]
-        assert "id" in content
-    else:
-        assert response.status_code == 400
+    assert response.status_code == 200
+    content = response.json()
+    assert content["name"] == data["name"]
+    assert content["address"] == data["address"]
+    assert "id" in content
 
 
 def test_read_restaurant(
